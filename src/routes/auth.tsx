@@ -1,7 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Input } from "@/components/ui/input";
 import { LogoMark } from "@/components/SiteLayout";
 
 export const Route = createFileRoute("/auth")({
@@ -46,12 +45,13 @@ function AuthPage() {
         <div className="flex justify-center"><LogoMark className="h-14 w-14" /></div>
         <h1 className="text-center text-2xl font-semibold text-primary">Admin sign in</h1>
         <div className="relative">
-          <Input 
+          <input 
             name="password" 
             type={showPassword ? "text" : "password"} 
             required 
             minLength={8} 
             placeholder="Admin password" 
+            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
           />
           <button 
             type="button"
