@@ -16,7 +16,6 @@ function generateIndexHtml() {
       try {
         if (existsSync(manifestPath)) {
           const manifest = JSON.parse(readFileSync(manifestPath, "utf-8"));
-          // Find the main entry point (isEntry: true)
           const entryKey = Object.keys(manifest).find(key => manifest[key].isEntry === true);
           if (entryKey) {
             entryScript = `/${manifest[entryKey].file}`;
@@ -65,6 +64,15 @@ function generateIndexHtml() {
   <body>
     <div id="root"></div>
     <script type="module" src="${entryScript}"></script>
+    <script>
+      // Error logging for debugging
+      window.addEventListener('error', (e) => {
+        console.error('Global error:', e.message, e.filename, e.lineno, e.colno, e.error);
+      });
+      window.addEventListener('unhandledrejection', (e) => {
+        console.error('Unhandled rejection:', e.reason);
+      });
+    </script>
   </body>
 </html>`;
       writeFileSync(resolve("dist/client/index.html"), html);
