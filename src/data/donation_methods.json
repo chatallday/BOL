@@ -1,0 +1,5 @@
+[
+  { "id": "1", "title_en": "Stripe (Credit Card)", "title_es": "Stripe (Tarjeta de Crédito)", "details_en": "Secure online donation via Stripe. Immediate receipt.", "details_es": "Donación segura en línea vía Stripe. Recibo inmediato.", "link": "https://donate.stripe.com/example", "visible": true, "sort_order": 0 },
+  { "id": "2", "title_en": "PayPal (USA & Canada Tax Purposes)", "title_es": "PayPal (EE.UU. y Canadá fines fiscales)", "details_en": "Donate via PayPal through our US partner for tax receipts in USA/Canada.", "details_es": "Dona vía PayPal a través de nuestro socio en EE.UU. para recibos fiscales en EE.UU./Canadá.", "link": "https://paypal.me/example", "visible": true, "sort_order": 1 },
+  { "id": "3", "title_en": "OXXO / Bank Transfer (Mexico)", "title_es": "OXXO / Transferencia Bancaria (México)", "details_en": "Deposit at any OXXO or transfer to: BBVA 0123456789, CLABE 012180001234567890. Reference: BOL", "details_es": "Depósito en cualquier OXXO o transferencia a: BBVA 0123456789, CLABE 012180001234567890. Referencia: BOL", "link": "", "visible": true, "sort_order": 2 }
+]

@@ -1,0 +1,5 @@
+[
+  { "id": "1", "name": "Playa Expats Office", "address": "Calle 10, between Av. 5 and Av. 10, Centro", "phone": "+52 984 123 4567", "map_url": "https://maps.app.goo.gl/example1", "hours_en": "Mon-Fri 9am-5pm", "hours_es": "Lun-Vie 9am-5pm", "visible": true, "sort_order": 0 },
+  { "id": "2", "name": "The Coffee Bean", "address": "Av. 30, between Calle 12 and Calle 14", "phone": "+52 984 234 5678", "map_url": "https://maps.app.goo.gl/example2", "hours_en": "Daily 7am-8pm", "hours_es": "Diario 7am-8pm", "visible": true, "sort_order": 1 },
+  { "id": "3", "name": "Yoga Shala Playa", "address": "Calle 40, between Av. 10 and Av. 15", "phone": "+52 984 345 6789", "map_url": "https://maps.app.goo.gl/example3", "hours_en": "Mon-Sat 7am-7pm", "hours_es": "Lun-Sab 7am-7pm", "visible": true, "sort_order": 2 }
+]

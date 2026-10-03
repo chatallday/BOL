@@ -1,0 +1,10 @@
+[
+  { "id": "home", "slug": "home", "label_en": "Home", "label_es": "Inicio", "title_en": "", "title_es": "", "body_en": "", "body_es": "", "sort_order": 0, "visible": true, "is_system": true },
+  { "id": "about", "slug": "about", "label_en": "About Us", "label_es": "Sobre Nosotros", "title_en": "About Us", "title_es": "Sobre Nosotros", "body_en": "", "body_es": "", "sort_order": 1, "visible": true, "is_system": true },
+  { "id": "values", "slug": "values", "label_en": "Values", "label_es": "Valores", "title_en": "Values & Beliefs", "title_es": "Valores y Creencias", "body_en": "", "body_es": "", "sort_order": 2, "visible": true, "is_system": true },
+  { "id": "help", "slug": "help", "label_en": "How to Help", "label_es": "Cómo Ayudar", "title_en": "How You Can Help", "title_es": "Cómo Puedes Ayudar", "body_en": "", "body_es": "", "sort_order": 3, "visible": true, "is_system": true },
+  { "id": "volunteer", "slug": "volunteer", "label_en": "Volunteer", "label_es": "Voluntariado", "title_en": "Volunteer", "title_es": "Voluntariado", "body_en": "", "body_es": "", "sort_order": 4, "visible": true, "is_system": true },
+  { "id": "drop-off", "slug": "drop-off", "label_en": "Drop-Off", "label_es": "Entrega", "title_en": "Drop-Off Points", "title_es": "Puntos de Entrega", "body_en": "", "body_es": "", "sort_order": 5, "visible": true, "is_system": true },
+  { "id": "donate", "slug": "donate", "label_en": "Donate", "label_es": "Donar", "title_en": "Donations", "title_es": "Donativos", "body_en": "", "body_es": "", "sort_order": 6, "visible": true, "is_system": true },
+  { "id": "contact", "slug": "contact", "label_en": "Contact", "label_es": "Contacto", "title_en": "Contact Us", "title_es": "Contáctanos", "body_en": "", "body_es": "", "sort_order": 7, "visible": true, "is_system": true }
+]
