@@ -85,6 +85,7 @@ export default defineConfig({
   plugins: [
     tanstackStart({
       server: { entry: "server" },
+      client: { entry: "client" },
     }),
     viteReact(),
     tailwindcss(),
