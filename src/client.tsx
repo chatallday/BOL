@@ -3,8 +3,9 @@ import { createRoot } from 'react-dom/client'
 import { getRouter } from './router'
 import { RouterProvider } from '@tanstack/react-router'
 
-startTransition(() => {
+startTransition(async () => {
   const router = getRouter()
+  await router.load()
   
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
