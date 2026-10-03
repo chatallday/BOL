@@ -12,5 +12,8 @@ export const getRouter = () => {
     defaultPreloadStaleTime: 0,
   });
 
+  // Ensure router is ready for client-side navigation
+  router.subscribe("routeChanged", () => {});
+
   return router;
 };
