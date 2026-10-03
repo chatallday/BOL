@@ -1,5 +1,12 @@
 [
-  { "id": "1", "name": "Playa Expats Office", "address": "Calle 10, between Av. 5 and Av. 10, Centro", "phone": "+52 984 123 4567", "map_url": "https://maps.app.goo.gl/example1", "hours_en": "Mon-Fri 9am-5pm", "hours_es": "Lun-Vie 9am-5pm", "visible": true, "sort_order": 0 },
-  { "id": "2", "name": "The Coffee Bean", "address": "Av. 30, between Calle 12 and Calle 14", "phone": "+52 984 234 5678", "map_url": "https://maps.app.goo.gl/example2", "hours_en": "Daily 7am-8pm", "hours_es": "Diario 7am-8pm", "visible": true, "sort_order": 1 },
-  { "id": "3", "name": "Yoga Shala Playa", "address": "Calle 40, between Av. 10 and Av. 15", "phone": "+52 984 345 6789", "map_url": "https://maps.app.goo.gl/example3", "hours_en": "Mon-Sat 7am-7pm", "hours_es": "Lun-Sab 7am-7pm", "visible": true, "sort_order": 2 }
+  { "id": "1", "name": "Buzos Restaurant", "address": "Calle 26 entre Av. 25 y 30, Centro", "phone": "", "map_url": "https://maps.app.goo.gl/2reBbPo219KUkaC49", "hours_en": "", "hours_es": "", "visible": true, "sort_order": 0 },
+  { "id": "2", "name": "Breath of Life", "address": "Av. 90 entre Calles 16 y 18, Ejido, Playa Del Carmen", "phone": "", "map_url": "", "hours_en": "", "hours_es": "", "visible": true, "sort_order": 1 },
+  { "id": "3", "name": "Ageless Clinic", "address": "", "phone": "", "map_url": "https://maps.app.goo.gl/hDiyxQNENGH3Kiy8A", "hours_en": "", "hours_es": "", "visible": true, "sort_order": 2 },
+  { "id": "4", "name": "Beauty Lounge", "address": "", "phone": "", "map_url": "https://maps.app.goo.gl/ksrbpxipcFeeGu9K9", "hours_en": "", "hours_es": "", "visible": true, "sort_order": 3 },
+  { "id": "5", "name": "Buzos Restaurante", "address": "", "phone": "", "map_url": "https://maps.app.goo.gl/RuknjGYoZFNR3HjW8", "hours_en": "", "hours_es": "", "visible": true, "sort_order": 4 },
+  { "id": "6", "name": "Century 21", "address": "", "phone": "", "map_url": "https://maps.app.goo.gl/1ZduzXdi4iV35r3aA", "hours_en": "", "hours_es": "", "visible": true, "sort_order": 5 },
+  { "id": "7", "name": "India Jones", "address": "", "phone": "", "map_url": "https://maps.app.goo.gl/YBaAqLuE4s37tgWG8", "hours_en": "", "hours_es": "", "visible": true, "sort_order": 6 },
+  { "id": "8", "name": "Roma Spaghetti", "address": "", "phone": "", "map_url": "https://maps.app.goo.gl/mJNo2ZuGsTQKcqpW6", "hours_en": "", "hours_es": "", "visible": true, "sort_order": 7 },
+  { "id": "9", "name": "Slim Medi Spa", "address": "", "phone": "", "map_url": "https://maps.app.goo.gl/TwFfhBxFhzw9aHKo8", "hours_en": "", "hours_es": "", "visible": true, "sort_order": 8 },
+  { "id": "10", "name": "Slim Body & Face, 5th Ave", "address": "", "phone": "", "map_url": "https://maps.app.goo.gl/ubnAY4yWmC5aAVAR6", "hours_en": "", "hours_es": "", "visible": true, "sort_order": 9 }
 ]

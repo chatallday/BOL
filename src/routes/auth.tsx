@@ -65,9 +65,6 @@ function AuthPage() {
         <button disabled={busy} className="w-full rounded-full bg-primary py-3 font-semibold text-primary-foreground disabled:opacity-50">
           {busy ? "…" : "Sign in"}
         </button>
-        <p className="text-center text-sm text-muted-foreground">
-          Password is set via VITE_ADMIN_PASSWORD environment variable
-        </p>
       </form>
     </div>
   );
