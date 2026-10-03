@@ -21,7 +21,6 @@ const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || "boladmin2026";
 function AuthPage() {
   const nav = useNavigate();
   const [busy, setBusy] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -44,24 +43,15 @@ function AuthPage() {
       <form onSubmit={submit} className="w-full max-w-sm space-y-4 rounded-3xl bg-card p-8 shadow-xl">
         <div className="flex justify-center"><LogoMark className="h-14 w-14" /></div>
         <h1 className="text-center text-2xl font-semibold text-primary">Admin sign in</h1>
-        <div className="relative">
-          <input 
-            name="password" 
-            type={showPassword ? "text" : "password"} 
-            required 
-            minLength={8} 
-            placeholder="Admin password" 
-            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-          />
-          <button 
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-            aria-label={showPassword ? "Hide password" : "Show password"}
-          >
-            {showPassword ? "👁" : "👁‍🗨"}
-          </button>
-        </div>
+        <input 
+          name="password" 
+          type="password" 
+          required 
+          minLength={8} 
+          placeholder="Admin password" 
+          className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+          autoComplete="current-password"
+        />
         <button disabled={busy} className="w-full rounded-full bg-primary py-3 font-semibold text-primary-foreground disabled:opacity-50">
           {busy ? "…" : "Sign in"}
         </button>
