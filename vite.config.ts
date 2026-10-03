@@ -16,9 +16,10 @@ function generateIndexHtml() {
       try {
         if (existsSync(manifestPath)) {
           const manifest = JSON.parse(readFileSync(manifestPath, "utf-8"));
-          const entry = manifest["src/routeTree.gen.ts"] || manifest["src/main.tsx"] || Object.values(manifest)[0];
-          if (entry && entry.file) {
-            entryScript = `/assets/${entry.file}`;
+          // Find the main entry point (isEntry: true)
+          const entryKey = Object.keys(manifest).find(key => manifest[key].isEntry === true);
+          if (entryKey) {
+            entryScript = `/${manifest[entryKey].file}`;
           }
         }
       } catch (e) {
@@ -82,4 +83,7 @@ export default defineConfig({
     tsConfigPaths(),
     generateIndexHtml(),
   ],
+  build: {
+    manifest: true,
+  },
 });
