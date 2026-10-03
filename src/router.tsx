@@ -10,9 +10,9 @@ export const getRouter = () => {
     context: { queryClient },
     scrollRestoration: true,
     defaultPreloadStaleTime: 0,
+    basepath: "/",
   });
 
-  // Ensure router is ready for client-side navigation
   router.subscribe("routeChanged", () => {});
 
   return router;
