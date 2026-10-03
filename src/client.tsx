@@ -1,11 +1,14 @@
 import { StrictMode, startTransition } from 'react'
 import { createRoot } from 'react-dom/client'
-import { StartClient } from '@tanstack/react-start/client'
+import { getRouter } from './router'
+import { RouterProvider } from '@tanstack/react-router'
 
 startTransition(() => {
+  const router = getRouter()
+  
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
-      <StartClient />
+      <RouterProvider router={router} />
     </StrictMode>
   )
 })
