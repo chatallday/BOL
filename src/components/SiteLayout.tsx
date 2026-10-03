@@ -6,7 +6,7 @@ import { pagePath, usePages, useBlocks } from "@/lib/cms";
 import { WhatsAppButton, LegalLinks } from "@/components/SiteExtras";
 
 export function LogoMark({ className = "h-10 w-10" }: { className?: string }) {
-  return <img src="/favicon.png" alt="Breath of Life PDC" className={`shrink-0 object-contain ${className}`} />;
+  return <img src="/logo.png" alt="Breath of Life PDC" className={`shrink-0 object-contain ${className}`} />;
 }
 export const SOCIAL = {
   website: "https://breathoflifepdc.org/",
