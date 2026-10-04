@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { LogoMark } from "@/components/SiteLayout";
 
@@ -23,6 +23,10 @@ function AuthPage() {
   const [busy, setBusy] = useState(false);
   const [debug, setDebug] = useState("mounting");
 
+  useEffect(() => {
+    console.log("[AUTH] Mounted, debug:", debug);
+  }, []);
+
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
@@ -43,11 +47,13 @@ function AuthPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-secondary px-4 relative z-50" style={{background:"red"}}>
+    <div className="flex min-h-screen items-center justify-center bg-secondary px-4 relative z-50" style={{background:"red", minHeight:"100vh"}}>
       <form onSubmit={submit} className="w-full max-w-sm space-y-4 rounded-3xl bg-card p-8 shadow-xl pointer-events-auto" style={{background:"blue"}}>
         <div className="flex justify-center"><LogoMark className="h-14 w-14" /></div>
         <h1 className="text-center text-2xl font-semibold text-primary">Admin sign in</h1>
-        <p className="text-center text-sm text-muted-foreground">Debug: {debug}</p>
+        <p style={{color:"yellow", fontSize:"18px", fontWeight:"bold", textAlign:"center", margin:"10px 0"}}>
+          DEBUG: {debug}
+        </p>
         <input 
           name="password" 
           type="password" 
@@ -56,8 +62,8 @@ function AuthPage() {
           placeholder="Admin password" 
           className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
           autoComplete="current-password"
-          onFocus={() => setDebug("focused")}
-          onChange={(e) => setDebug("typing:" + e.target.value.length)}
+          onFocus={() => { console.log("[AUTH] focus"); setDebug("focused"); }}
+          onChange={(e) => { console.log("[AUTH] change:", e.target.value.length); setDebug("typing:" + e.target.value.length); }}
         />
         <button disabled={busy} className="w-full rounded-full bg-primary py-3 font-semibold text-primary-foreground disabled:opacity-50">
           {busy ? "…" : "Sign in"}
