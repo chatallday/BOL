@@ -39,8 +39,8 @@ function AuthPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-secondary px-4">
-      <form onSubmit={submit} className="w-full max-w-sm space-y-4 rounded-3xl bg-card p-8 shadow-xl">
+    <div className="flex min-h-screen items-center justify-center bg-secondary px-4 relative z-50">
+      <form onSubmit={submit} className="w-full max-w-sm space-y-4 rounded-3xl bg-card p-8 shadow-xl pointer-events-auto">
         <div className="flex justify-center"><LogoMark className="h-14 w-14" /></div>
         <h1 className="text-center text-2xl font-semibold text-primary">Admin sign in</h1>
         <input 

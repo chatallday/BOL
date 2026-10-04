@@ -10,7 +10,7 @@ export function WhatsAppButton() {
   const label = t("Join our WhatsApp", "Únete a nuestro WhatsApp");
   return (
     <a href={WHATSAPP_GROUP} target="_blank" rel="noopener noreferrer" aria-label={label}
-      className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-accent px-4 py-3 font-semibold text-accent-foreground shadow-lg transition hover:scale-105 sm:bottom-6 sm:right-6">
+      className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-accent px-4 py-3 font-semibold text-accent-foreground shadow-lg transition hover:scale-105 sm:bottom-6 sm:right-6 pointer-events-none hover:pointer-events-auto">
       <MessageCircle className="h-6 w-6" />
       <span className="hidden sm:inline">{label}</span>
     </a>
