@@ -8,6 +8,12 @@ export const WHATSAPP_GROUP = "https://chat.whatsapp.com/KBWFahrhjwG9mMLusEiz4G?
 export function WhatsAppButton() {
   const { t } = useLang();
   const label = t("Join our WhatsApp", "Únete a nuestro WhatsApp");
+  
+  // Don't show on auth page - it blocks input
+  if (typeof window !== 'undefined' && window.location.pathname === '/auth') {
+    return null;
+  }
+  
   return (
     <a href={WHATSAPP_GROUP} target="_blank" rel="noopener noreferrer" aria-label={label}
       className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-accent px-4 py-3 font-semibold text-accent-foreground shadow-lg transition hover:scale-105 sm:bottom-6 sm:right-6 pointer-events-none hover:pointer-events-auto">
