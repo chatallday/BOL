@@ -20,9 +20,10 @@ function generateIndexHtml() {
           const entryKey = Object.keys(manifest).find(key => manifest[key].isEntry === true);
           if (entryKey) {
             entryScript = `/${manifest[entryKey].file}`;
-            // Also get the CSS file for this entry
-            if (manifest[entryKey].css && manifest[entryKey].css.length > 0) {
-              entryStyle = `<link rel="stylesheet" href="/${manifest[entryKey].css[0]}" />`;
+            // Vite uses 'assets' array for CSS, not 'css'
+            const cssAssets = manifest[entryKey].assets || [];
+            if (cssAssets.length > 0) {
+              entryStyle = cssAssets.map(css => `<link rel="stylesheet" href="/${css}" />`).join('\n    ');
             }
           }
         }
