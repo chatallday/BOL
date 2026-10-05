@@ -83,6 +83,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { property: "og:site_name", content: "Breath of Life PDC" },
+      { property: "og:image", content: "https://playa-impact-cms.vercel.app/logo.png" },
+      { property: "og:image:width", content: "512" },
+      { property: "og:image:height", content: "512" },
     ],
     scripts: [{ type: "application/ld+json", children: JSON.stringify({"@context":"https://schema.org","@type":"NGO","name":"Breath of Life PDC","alternateName":"Aliento de Vida","url":"https://breathoflifepdc.org","email":"BreathOfLifePDC@gmail.com","address":{"@type":"PostalAddress","addressLocality":"Playa del Carmen","addressRegion":"Quintana Roo","addressCountry":"MX"},"sameAs":["https://breathoflifepdc.org/","https://facebook.com/breathoflifepdc","https://instagram.com/breathoflifeadv","https://www.youtube.com/@BreathOfLifePDC"]}) }],
     links: [
