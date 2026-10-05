@@ -13,6 +13,28 @@ const schema = z.object({
   message: z.string().trim().max(2000),
 });
 
+const STORAGE_KEY = "bol_messages";
+
+function getStoredMessages() {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveMessage(message: { name: string; email: string; phone: string; message: string; kind: "contact" | "volunteer" }) {
+  const messages = getStoredMessages();
+  messages.unshift({
+    ...message,
+    id: crypto.randomUUID(),
+    created_at: new Date().toISOString(),
+    status: "new",
+  });
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+}
+
 export function SignupForm({ kind }: { kind: "contact" | "volunteer" }) {
   const { t } = useLang();
   const b = useBlocks();
@@ -29,6 +51,9 @@ export function SignupForm({ kind }: { kind: "contact" | "volunteer" }) {
     await new Promise((r) => setTimeout(r, 800));
     setBusy(false);
     setDone(true);
+    
+    // Save to localStorage so admin can see it
+    saveMessage({ ...parsed.data, kind });
     
     // Also prepare mailto link as fallback
     const notifyEmail = b("contact_email");

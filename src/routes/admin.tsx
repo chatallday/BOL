@@ -230,22 +230,44 @@ function ContentEditor() {
 
 function Messages() {
   const qc = useQueryClient();
-  const { data = [] } = useRows<any>("messages");
+  const [messages, setMessages] = useState<any[]>([]);
   const [filter, setFilter] = useState<"all" | "contact" | "volunteer">("all");
   const [openId, setOpenId] = useState<string | null>(null);
-  const sorted = [...data].filter((m) => filter === "all" || m.kind === filter).sort((a, b) => b.created_at.localeCompare(a.created_at));
-  const refresh = () => qc.invalidateQueries({ queryKey: ["messages"] });
-  const setStatus = async (id: string, status: string) => {
-    const { error } = await db("messages").update({ status }).eq("id", id);
-    if (error) toast.error(error.message); else refresh();
+
+  // Load messages from localStorage
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("bol_messages");
+      if (stored) setMessages(JSON.parse(stored));
+    } catch {}
+  }, []);
+
+  const refresh = () => {
+    try {
+      const stored = localStorage.getItem("bol_messages");
+      if (stored) setMessages(JSON.parse(stored));
+    } catch {}
   };
-  const remove = async (id: string) => {
+
+  const saveMessages = (newMessages: any[]) => {
+    localStorage.setItem("bol_messages", JSON.stringify(newMessages));
+    setMessages(newMessages);
+  };
+
+  const setStatus = (id: string, status: string) => {
+    setMessages(prev => prev.map(m => m.id === id ? { ...m, status } : m));
+    saveMessages(prev => prev.map(m => m.id === id ? { ...m, status } : m));
+  };
+
+  const remove = (id: string) => {
     if (!confirm("Delete this message?")) return;
-    const { error } = await db("messages").delete().eq("id", id);
-    if (error) toast.error(error.message); else { toast.success("Deleted"); refresh(); }
+    setMessages(prev => prev.filter(m => m.id !== id));
+    saveMessages(prev => prev.filter(m => m.id !== id));
   };
+
   const badge: Record<string, string> = { new: "bg-accent text-accent-foreground", seen: "bg-secondary", actioned: "bg-muted text-muted-foreground" };
-  const newCount = data.filter((m) => (m.status ?? "new") === "new").length;
+  const sorted = [...messages].filter((m) => filter === "all" || m.kind === filter).sort((a, b) => b.created_at.localeCompare(a.created_at));
+  const newCount = messages.filter((m) => (m.status ?? "new") === "new").length;
   return (
     <div className="mt-4 space-y-3">
       <div className="flex flex-wrap items-center gap-2">
