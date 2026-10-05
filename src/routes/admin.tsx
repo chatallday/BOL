@@ -79,7 +79,6 @@ function Admin() {
             <TabsTrigger value="dropoffs">Drop-off points</TabsTrigger>
             <TabsTrigger value="volunteer">Volunteer needs</TabsTrigger>
             <TabsTrigger value="donations">Donation methods</TabsTrigger>
-            <TabsTrigger value="messages">Messages</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger>
           </TabsList>
           <TabsContent value="pages"><PagesEditor /></TabsContent>
@@ -100,7 +99,6 @@ function Admin() {
               { key: "details_en", label: "Details (EN)", type: "textarea" }, { key: "details_es", label: "Detalles (ES)", type: "textarea" },
               { key: "link", label: "Payment link (also generates QR code)" }]} />
           </TabsContent>
-          <TabsContent value="messages"><Messages /></TabsContent>
           <TabsContent value="settings"><Settings /></TabsContent>
         </Tabs>
       </main>
@@ -221,86 +219,6 @@ function ContentEditor() {
               <FieldInput f={{ key: "value_en", label: "English", type: "textarea" }} value={e.value_en} onChange={(v) => set("value_en", v)} />
               <FieldInput f={{ key: "value_es", label: "Español", type: "textarea" }} value={e.value_es} onChange={(v) => set("value_es", v)} />
             </div>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-function Messages() {
-  const qc = useQueryClient();
-  const [messages, setMessages] = useState<any[]>([]);
-  const [filter, setFilter] = useState<"all" | "contact" | "volunteer">("all");
-  const [openId, setOpenId] = useState<string | null>(null);
-
-  // Load messages from localStorage
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem("bol_messages");
-      if (stored) setMessages(JSON.parse(stored));
-    } catch {}
-  }, []);
-
-  const refresh = () => {
-    try {
-      const stored = localStorage.getItem("bol_messages");
-      if (stored) setMessages(JSON.parse(stored));
-    } catch {}
-  };
-
-  const saveMessages = (newMessages: any[]) => {
-    localStorage.setItem("bol_messages", JSON.stringify(newMessages));
-    setMessages(newMessages);
-  };
-
-  const setStatus = (id: string, status: string) => {
-    setMessages(prev => prev.map(m => m.id === id ? { ...m, status } : m));
-    saveMessages(prev => prev.map(m => m.id === id ? { ...m, status } : m));
-  };
-
-  const remove = (id: string) => {
-    if (!confirm("Delete this message?")) return;
-    setMessages(prev => prev.filter(m => m.id !== id));
-    saveMessages(prev => prev.filter(m => m.id !== id));
-  };
-
-  const badge: Record<string, string> = { new: "bg-accent text-accent-foreground", seen: "bg-secondary", actioned: "bg-muted text-muted-foreground" };
-  const sorted = [...messages].filter((m) => filter === "all" || m.kind === filter).sort((a, b) => b.created_at.localeCompare(a.created_at));
-  const newCount = messages.filter((m) => (m.status ?? "new") === "new").length;
-  return (
-    <div className="mt-4 space-y-3">
-      <div className="flex flex-wrap items-center gap-2">
-        {(["all", "contact", "volunteer"] as const).map((f) => (
-          <button key={f} onClick={() => setFilter(f)} className={`rounded-full px-4 py-1.5 text-sm capitalize ${filter === f ? "bg-primary text-primary-foreground" : "border bg-card"}`}>{f}</button>
-        ))}
-        <span className="ml-auto text-sm text-muted-foreground">{newCount} new</span>
-      </div>
-      {sorted.length === 0 && <p className="text-muted-foreground">No messages yet.</p>}
-      {sorted.map((m) => {
-        const status = m.status ?? "new";
-        const open = openId === m.id;
-        return (
-          <div key={m.id} className={`rounded-2xl border bg-card p-4 sm:p-5 ${status === "new" ? "border-accent" : ""}`}>
-            <button className="flex w-full flex-wrap items-center gap-2 text-left" onClick={() => { setOpenId(open ? null : m.id); if (!open && status === "new") setStatus(m.id, "seen"); }}>
-              <span className="rounded bg-secondary px-2 py-0.5 text-xs uppercase">{m.kind}</span>
-              <span className={`rounded px-2 py-0.5 text-xs uppercase ${badge[status]}`}>{status}</span>
-              <strong className="break-all">{m.name}</strong>
-              <span className="ml-auto text-xs text-muted-foreground">{new Date(m.created_at).toLocaleString()}</span>
-            </button>
-            {open && (
-              <div className="mt-3 space-y-3">
-                <p className="break-all text-sm"><a href={`mailto:${m.email}`} className="underline">{m.email}</a>{m.phone && ` · ${m.phone}`}</p>
-                <p className="whitespace-pre-line text-muted-foreground">{m.message || "(no message)"}</p>
-                <div className="flex flex-wrap gap-2">
-                  {status !== "actioned"
-                    ? <button onClick={() => setStatus(m.id, "actioned")} className="rounded-full bg-primary px-4 py-1.5 text-sm font-semibold text-primary-foreground">Mark actioned</button>
-                    : <button onClick={() => setStatus(m.id, "seen")} className="rounded-full border px-4 py-1.5 text-sm">Reopen</button>}
-                  {status !== "new" && <button onClick={() => setStatus(m.id, "new")} className="rounded-full border px-4 py-1.5 text-sm">Mark unread</button>}
-                  <button onClick={() => remove(m.id)} className="inline-flex items-center gap-1 rounded-full border px-4 py-1.5 text-sm text-destructive"><Trash2 className="h-4 w-4" />Delete</button>
-                </div>
-              </div>
-            )}
           </div>
         );
       })}

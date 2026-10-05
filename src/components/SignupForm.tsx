@@ -13,28 +13,6 @@ const schema = z.object({
   message: z.string().trim().max(2000),
 });
 
-const STORAGE_KEY = "bol_messages";
-
-function getStoredMessages() {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveMessage(message: { name: string; email: string; phone: string; message: string; kind: "contact" | "volunteer" }) {
-  const messages = getStoredMessages();
-  messages.unshift({
-    ...message,
-    id: crypto.randomUUID(),
-    created_at: new Date().toISOString(),
-    status: "new",
-  });
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
-}
-
 export function SignupForm({ kind }: { kind: "contact" | "volunteer" }) {
   const { t } = useLang();
   const b = useBlocks();
@@ -47,22 +25,52 @@ export function SignupForm({ kind }: { kind: "contact" | "volunteer" }) {
     const parsed = schema.safeParse(fd);
     if (!parsed.success) { toast.error(t("Please check your name and email.", "Revisa tu nombre y correo.")); return; }
     setBusy(true);
-    // Simulate API call - in production, replace with actual form submission (Formspree, Netlify Forms, etc.)
-    await new Promise((r) => setTimeout(r, 800));
-    setBusy(false);
-    setDone(true);
     
-    // Save to localStorage so admin can see it
-    saveMessage({ ...parsed.data, kind });
-    
-    // Also prepare mailto link as fallback
+    // Prepare email content
     const notifyEmail = b("contact_email");
     const subject = kind === "volunteer" 
       ? t("New volunteer signup: {name}", "Nuevo voluntario: {name}").replace("{name}", parsed.data.name)
       : t("New contact message: {name}", "Nuevo mensaje de contacto: {name}").replace("{name}", parsed.data.name);
     const body = `Name: ${parsed.data.name}\nEmail: ${parsed.data.email}\nPhone: ${parsed.data.phone}\n\n${parsed.data.message}`;
-    console.log(`Form submitted (${kind}):`, parsed.data);
-    console.log(`Mailto fallback: mailto:${notifyEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
+    
+    // Try to send via Resend if configured, otherwise mailto fallback
+    const resendApiKey = import.meta.env.VITE_RESEND_API_KEY;
+    let sent = false;
+    
+    if (resendApiKey) {
+      try {
+        const response = await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${resendApiKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: "Breath of Life PDC <onboarding@resend.dev>",
+            to: notifyEmail,
+            subject,
+            text: body,
+            reply_to: parsed.data.email,
+          }),
+        });
+        if (response.ok) {
+          sent = true;
+        } else {
+          console.error("Resend error:", await response.text());
+        }
+      } catch (err) {
+        console.error("Resend failed:", err);
+      }
+    }
+    
+    if (!sent) {
+      // Fallback: mailto link
+      const mailtoUrl = `mailto:${notifyEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailtoUrl;
+    }
+    
+    setBusy(false);
+    setDone(true);
   }
 
   if (done) return (
