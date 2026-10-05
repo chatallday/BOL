@@ -5,15 +5,10 @@ import { routeTree } from "./routeTree.gen";
 export const getRouter = () => {
   const queryClient = new QueryClient();
 
-  const router = createRouter({
+  return createRouter({
     routeTree,
     context: { queryClient },
     scrollRestoration: true,
     defaultPreloadStaleTime: 0,
-    basepath: "/",
   });
-
-  router.subscribe("routeChanged", () => {});
-
-  return router;
 };
