@@ -17,6 +17,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DonateRouteImport } from './routes/donate'
 import { Route as DropOffRouteImport } from './routes/drop-off'
 import { Route as HelpRouteImport } from './routes/help'
+import { Route as TestInputRouteImport } from './routes/test-input'
 import { Route as ValuesRouteImport } from './routes/values'
 import { Route as VolunteerRouteImport } from './routes/volunteer'
 import { Route as PSlugRouteImport } from './routes/p.$slug'
@@ -61,6 +62,11 @@ const HelpRoute = HelpRouteImport.update({
   path: '/help',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TestInputRoute = TestInputRouteImport.update({
+  id: '/test-input',
+  path: '/test-input',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ValuesRoute = ValuesRouteImport.update({
   id: '/values',
   path: '/values',
@@ -86,6 +92,7 @@ export interface FileRoutesByFullPath {
   '/donate': typeof DonateRoute
   '/drop-off': typeof DropOffRoute
   '/help': typeof HelpRoute
+  '/test-input': typeof TestInputRoute
   '/values': typeof ValuesRoute
   '/volunteer': typeof VolunteerRoute
   '/p/$slug': typeof PSlugRoute
@@ -99,6 +106,7 @@ export interface FileRoutesByTo {
   '/donate': typeof DonateRoute
   '/drop-off': typeof DropOffRoute
   '/help': typeof HelpRoute
+  '/test-input': typeof TestInputRoute
   '/values': typeof ValuesRoute
   '/volunteer': typeof VolunteerRoute
   '/p/$slug': typeof PSlugRoute
@@ -113,6 +121,7 @@ export interface FileRoutesById {
   '/donate': typeof DonateRoute
   '/drop-off': typeof DropOffRoute
   '/help': typeof HelpRoute
+  '/test-input': typeof TestInputRoute
   '/values': typeof ValuesRoute
   '/volunteer': typeof VolunteerRoute
   '/p/$slug': typeof PSlugRoute
@@ -128,6 +137,7 @@ export interface FileRouteTypes {
     | '/donate'
     | '/drop-off'
     | '/help'
+    | '/test-input'
     | '/values'
     | '/volunteer'
     | '/p/$slug'
@@ -141,6 +151,7 @@ export interface FileRouteTypes {
     | '/donate'
     | '/drop-off'
     | '/help'
+    | '/test-input'
     | '/values'
     | '/volunteer'
     | '/p/$slug'
@@ -154,6 +165,7 @@ export interface FileRouteTypes {
     | '/donate'
     | '/drop-off'
     | '/help'
+    | '/test-input'
     | '/values'
     | '/volunteer'
     | '/p/$slug'
@@ -168,6 +180,7 @@ export interface RootRouteChildren {
   DonateRoute: typeof DonateRoute
   DropOffRoute: typeof DropOffRoute
   HelpRoute: typeof HelpRoute
+  TestInputRoute: typeof TestInputRoute
   ValuesRoute: typeof ValuesRoute
   VolunteerRoute: typeof VolunteerRoute
   PSlugRoute: typeof PSlugRoute
@@ -231,6 +244,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HelpRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/test-input': {
+      id: '/test-input'
+      path: '/test-input'
+      fullPath: '/test-input'
+      preLoaderRoute: typeof TestInputRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/values': {
       id: '/values'
       path: '/values'
@@ -264,6 +284,7 @@ const rootRouteChildren: RootRouteChildren = {
   DonateRoute: DonateRoute,
   DropOffRoute: DropOffRoute,
   HelpRoute: HelpRoute,
+  TestInputRoute: TestInputRoute,
   ValuesRoute: ValuesRoute,
   VolunteerRoute: VolunteerRoute,
   PSlugRoute: PSlugRoute,
