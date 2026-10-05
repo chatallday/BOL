@@ -39,6 +39,14 @@ function Admin() {
     setState("ok");
   }, [nav]);
 
+  // Timeout fallback
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (state === "loading") setState("ok");
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [state]);
+
   async function signOut() {
     sessionStorage.removeItem("bol_admin_auth");
     await qc.cancelQueries();

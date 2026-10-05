@@ -41,6 +41,8 @@ export function useRows<T = any>(table: string) {
       }
       return data.sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0)) as T[];
     },
+    retry: 1,
+    staleTime: 1000 * 60 * 5,
   });
 }
 

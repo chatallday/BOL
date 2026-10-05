@@ -23,17 +23,22 @@ function AuthPage() {
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    console.log("[AUTH] submit clicked");
     const fd = new FormData(e.currentTarget);
     const password = String(fd.get("password"));
+    console.log("[AUTH] password length:", password.length);
     setBusy(true);
     setDebug("submit:" + password.length);
     
     if (password === ADMIN_PASSWORD) {
+      console.log("[AUTH] password correct, setting sessionStorage");
       sessionStorage.setItem("bol_admin_auth", "true");
+      console.log("[AUTH] sessionStorage set, navigating to /admin");
       setBusy(false);
       setDebug("success");
       nav({ to: "/admin" });
     } else {
+      console.log("[AUTH] wrong password");
       setBusy(false);
       setDebug("wrong:" + password);
       alert("Incorrect password");
