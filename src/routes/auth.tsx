@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -20,6 +20,21 @@ function AuthPage() {
   const nav = useNavigate();
   const [busy, setBusy] = useState(false);
   const [debug, setDebug] = useState("mounting");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const input = inputRef.current;
+    if (input) {
+      const handleFocus = () => { console.log("[AUTH] focus"); setDebug("focused"); };
+      const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => { console.log("[AUTH] change:", e.target.value.length); setDebug("typing:" + e.target.value.length); };
+      input.addEventListener('focus', handleFocus);
+      input.addEventListener('input', handleChange);
+      return () => {
+        input.removeEventListener('focus', handleFocus);
+        input.removeEventListener('input', handleChange);
+      };
+    }
+  }, []);
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -72,14 +87,13 @@ function AuthPage() {
           DEBUG: {debug}
         </p>
         <input 
+          ref={inputRef}
           name="password" 
           type="password" 
           required 
           minLength={8} 
           placeholder="Admin password" 
           autoComplete="current-password"
-          onFocus={() => { console.log("[AUTH] focus"); setDebug("focused"); }}
-          onChange={(e) => { console.log("[AUTH] change:", e.target.value.length); setDebug("typing:" + e.target.value.length); }}
           style={{
             width: "100%",
             padding: "12px 16px",
