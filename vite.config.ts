@@ -12,6 +12,7 @@ function generateIndexHtml() {
     closeBundle() {
       const manifestPath = resolve("dist/client/.vite/manifest.json");
       let entryScript = "/assets/index-Dx6L2kb4.js";
+      let entryStyle = "";
 
       try {
         if (existsSync(manifestPath)) {
@@ -19,6 +20,10 @@ function generateIndexHtml() {
           const entryKey = Object.keys(manifest).find(key => manifest[key].isEntry === true);
           if (entryKey) {
             entryScript = `/${manifest[entryKey].file}`;
+            // Also get the CSS file for this entry
+            if (manifest[entryKey].css && manifest[entryKey].css.length > 0) {
+              entryStyle = `<link rel="stylesheet" href="/${manifest[entryKey].css[0]}" />`;
+            }
           }
         }
       } catch (e) {
@@ -58,6 +63,7 @@ function generateIndexHtml() {
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+    ${entryStyle}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" />
     <script type="application/ld+json">${JSON.stringify(schemaOrg)}</script>
   </head>
@@ -76,7 +82,7 @@ function generateIndexHtml() {
   </body>
 </html>`;
       writeFileSync(resolve("dist/client/index.html"), html);
-      console.log("Generated index.html with entry:", entryScript);
+      console.log("Generated index.html with entry:", entryScript, "and style:", entryStyle);
     },
   };
 }
