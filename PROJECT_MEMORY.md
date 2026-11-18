@@ -8,7 +8,8 @@
 - **GitHub/Vercel**: dynamicmike@gmail.com
 
 ## Live URLs
-- GitHub: https://github.com/dynamicmike-dashboard/playa-impact-cms
+- GitHub (original): https://github.com/dynamicmike-dashboard/playa-impact-cms
+- GitHub (new, 17nov26): https://github.com/chatallday/BOL.git (account: chatalldaybot@gmail.com)
 - Vercel: https://playa-impact-cms.vercel.app/
 - Custom: https://BreathofLifePDC.org
 
