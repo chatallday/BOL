@@ -88,7 +88,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
           </div>
           <div className="opacity-80">
             <p>{t("Special recognition to our many volunteers and supporters.", "Un reconocimiento especial a nuestros voluntarios y simpatizantes.")}</p>
-            <p className="mt-2">{t("Website sponsored by", "Sitio patrocinado por")} <a className="underline" href="https://playaexpats.com" target="_blank" rel="noreferrer">PlayaExpats.com</a></p>
+            <p className="mt-2">{t("Website sponsored by", "Sitio patrocinado por")} <a className="underline" href="https://PlayaVida.org" target="_blank" rel="noreferrer">PlayaVida.org</a></p>
           </div>
           <div className="flex flex-wrap gap-3 md:justify-end">
             {socialLinks(t).map(({ href, Icon, label }) => (
