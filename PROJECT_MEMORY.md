@@ -13,6 +13,10 @@
 - Vercel: https://playa-impact-cms.vercel.app/
 - Custom: https://BreathofLifePDC.org
 
+## Recent Changes
+- Footer sponsor changed from PlayaExpats.com to PlayaVida.org (https://PlayaVida.org).
+- Added "Christmas 2026" nav dropdown with links: Volunteer, Donate, Drop-off, Advent calendar tickets.
+
 ## Environment Variables (Vercel)
 - `VITE_ADMIN_PASSWORD=boladmin2026` (required for /admin login)
 
