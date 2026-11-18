@@ -47,6 +47,12 @@ export function SiteLayout({ children }: { children: ReactNode }) {
     navItems.splice(1, 0, { id: "about", href: "/about", en: "About Us", es: "Sobre Nosotros" });
   }
   const [open, setOpen] = useState(false);
+  const xmasLinks = [
+    { href: "https://pdc.breathoflifepdc.org/christmas-volunteers", en: "Volunteer", es: "Voluntariado" },
+    { href: "https://www.breathoflifepdc.org/donate", en: "Donate", es: "Donar" },
+    { href: "https://www.breathoflifepdc.org/drop-off", en: "Drop-off", es: "Puntos de entrega" },
+    { href: "https://pdc.breathoflifepdc.org/advent-calendar", en: "Advent calendar tickets", es: "Boletos calendario de adviento" },
+  ];
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -62,6 +68,18 @@ export function SiteLayout({ children }: { children: ReactNode }) {
                 {t(item.en, item.es)}
               </a>
             ))}
+            <div className="group relative">
+              <button className="whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-secondary hover:text-foreground">
+                {t("Christmas 2026", "Navidad 2026")} ▾
+              </button>
+              <div className="invisible absolute left-0 top-full z-50 mt-1 min-w-[13rem] rounded-xl border bg-background p-2 opacity-0 shadow-lg transition group-hover:visible group-hover:opacity-100">
+                {xmasLinks.map((l) => (
+                  <a key={l.href} href={l.href} target="_blank" rel="noreferrer" className="block rounded-lg px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-secondary hover:text-foreground">
+                    {t(l.en, l.es)}
+                  </a>
+                ))}
+              </div>
+            </div>
           </nav>
           <div className="flex items-center gap-2">
             <LangToggle />
@@ -75,6 +93,12 @@ export function SiteLayout({ children }: { children: ReactNode }) {
             {navItems.map((item) => (
               <a key={item.id} href={item.href} className="rounded-lg px-3 py-2 font-medium hover:bg-secondary">{t(item.en, item.es)}</a>
             ))}
+            <div className="px-3 py-2 font-semibold text-foreground/80">{t("Christmas 2026", "Navidad 2026")}</div>
+            <div className="ml-3 flex flex-col gap-1">
+              {xmasLinks.map((l) => (
+                <a key={l.href} href={l.href} target="_blank" rel="noreferrer" className="rounded-lg px-3 py-2 font-medium hover:bg-secondary">{t(l.en, l.es)}</a>
+              ))}
+            </div>
           </nav>
         )}
       </header>
