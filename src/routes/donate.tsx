@@ -29,7 +29,7 @@ function Donate() {
     const title = `${method.title_en ?? ""} ${method.title_es ?? ""}`.toLowerCase();
     if (title.includes("stripe")) return "/QR-stripe-donate.png";
     if (title.includes("usa") || title.includes("canada") || title.includes("tax")) return "/QR-USA-and-Canada-Tax-Purposes.png";
-    if (title.includes("wise")) return "/QR%20Wise%20for%20BOL.jpeg";
+    if (title.includes("wise")) return "/QR%20Wise%20for%20BOL%20crop.jpeg";
     return method.link ? `https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=${encodeURIComponent(method.link)}` : undefined;
   };
   return (
@@ -50,7 +50,7 @@ function Donate() {
                 )}
               </div>
               {officialQr(d) && (
-                <img alt={t(`QR code for ${d.title_en}`, `Código QR para ${d.title_es}`)} loading="lazy" width={140} height={140} className="h-36 w-36 self-center rounded-xl border bg-card p-2" src={officialQr(d)} />
+                <img alt={t(`QR code for ${d.title_en}`, `Código QR para ${d.title_es}`)} loading="lazy" width={140} height={140} className="h-36 w-36 self-center rounded-xl border bg-card p-2 object-contain" src={officialQr(d)} />
               )}
             </div>
           </Reveal>
