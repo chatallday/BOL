@@ -83,7 +83,11 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       es: "Voluntariado",
     },
     { href: "https://www.breathoflifepdc.org/donate", en: "Donate", es: "Donar" },
-    { href: "https://www.breathoflifepdc.org/drop-off", en: "Drop-off", es: "Puntos de entrega" },
+    {
+      href: "https://pdc.breathoflifepdc.org/advent-dropoff",
+      en: "Toy Drive Drop Off",
+      es: "Entrega de Toy Drive",
+    },
     {
       href: "https://pdc.breathoflifepdc.org/advent-calendar",
       en: "Advent calendar tickets",
