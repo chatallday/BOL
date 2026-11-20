@@ -29,6 +29,7 @@ function Donate() {
     const title = `${method.title_en ?? ""} ${method.title_es ?? ""}`.toLowerCase();
     if (title.includes("stripe")) return "/QR-stripe-donate.png";
     if (title.includes("usa") || title.includes("canada") || title.includes("tax")) return "/QR-USA-and-Canada-Tax-Purposes.png";
+    if (title.includes("wise")) return "/QR%20Wise%20for%20BOL.jpeg";
     return method.link ? `https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=${encodeURIComponent(method.link)}` : undefined;
   };
   return (
