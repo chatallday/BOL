@@ -1,12 +1,18 @@
 import { Link } from "@tanstack/react-router";
-import { useState, type ReactNode } from "react";
+import { useState, useRef, useEffect, type ReactNode } from "react";
 import { Menu, X, Facebook, Instagram, Youtube, MessageCircle, Globe } from "lucide-react";
 import { useLang } from "@/lib/i18n";
 import { pagePath, usePages, useBlocks } from "@/lib/cms";
 import { WhatsAppButton, LegalLinks } from "@/components/SiteExtras";
 
 export function LogoMark({ className = "h-10 w-10" }: { className?: string }) {
-  return <img src="/logo.png" alt="Breath of Life PDC" className={`shrink-0 object-contain ${className}`} />;
+  return (
+    <img
+      src="/logo.png"
+      alt="Breath of Life PDC"
+      className={`shrink-0 object-contain ${className}`}
+    />
+  );
 }
 export const SOCIAL = {
   website: "https://breathoflifepdc.org/",
@@ -18,7 +24,11 @@ export const SOCIAL = {
 export const socialLinks = (t: (en: string, es: string) => string) => [
   { href: SOCIAL.website, Icon: Globe, label: t("Website", "Sitio web") },
   { href: SOCIAL.facebook, Icon: Facebook, label: "Facebook" },
-  { href: SOCIAL.messenger, Icon: MessageCircle, label: t("Facebook Messenger", "Messenger de Facebook") },
+  {
+    href: SOCIAL.messenger,
+    Icon: MessageCircle,
+    label: t("Facebook Messenger", "Messenger de Facebook"),
+  },
   { href: SOCIAL.instagram, Icon: Instagram, label: "Instagram" },
   { href: SOCIAL.youtube, Icon: Youtube, label: "YouTube" },
 ];
@@ -28,8 +38,12 @@ function LangToggle() {
   return (
     <div className="flex rounded-full border bg-card p-0.5 text-xs font-semibold">
       {(["en", "es"] as const).map((l) => (
-        <button key={l} onClick={() => setLang(l)} aria-pressed={lang === l}
-          className={`rounded-full px-3 py-1.5 transition-colors ${lang === l ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}>
+        <button
+          key={l}
+          onClick={() => setLang(l)}
+          aria-pressed={lang === l}
+          className={`rounded-full px-3 py-1.5 transition-colors ${lang === l ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
+        >
           {l === "en" ? "English" : "Español"}
         </button>
       ))}
@@ -42,16 +56,39 @@ export function SiteLayout({ children }: { children: ReactNode }) {
   const b = useBlocks();
   const { data: pages = [] } = usePages();
   const nav = pages.filter((p) => p.visible);
-  const navItems = nav.map((p) => ({ id: p.id, href: pagePath(p), en: p.label_en, es: p.label_es }));
+  const navItems = nav.map((p) => ({
+    id: p.id,
+    href: pagePath(p),
+    en: p.label_en,
+    es: p.label_es,
+  }));
   if (!navItems.some((item) => item.href === "/about")) {
     navItems.splice(1, 0, { id: "about", href: "/about", en: "About Us", es: "Sobre Nosotros" });
   }
   const [open, setOpen] = useState(false);
+  const [xmasOpen, setXmasOpen] = useState(false);
+  const xmasRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!xmasOpen) return;
+    const handler = (e: MouseEvent) => {
+      if (xmasRef.current && !xmasRef.current.contains(e.target as Node)) setXmasOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [xmasOpen]);
   const xmasLinks = [
-    { href: "https://pdc.breathoflifepdc.org/christmas-volunteers", en: "Volunteer", es: "Voluntariado" },
+    {
+      href: "https://pdc.breathoflifepdc.org/christmas-volunteers",
+      en: "Volunteer",
+      es: "Voluntariado",
+    },
     { href: "https://www.breathoflifepdc.org/donate", en: "Donate", es: "Donar" },
     { href: "https://www.breathoflifepdc.org/drop-off", en: "Drop-off", es: "Puntos de entrega" },
-    { href: "https://pdc.breathoflifepdc.org/advent-calendar", en: "Advent calendar tickets", es: "Boletos calendario de adviento" },
+    {
+      href: "https://pdc.breathoflifepdc.org/advent-calendar",
+      en: "Advent calendar tickets",
+      es: "Boletos calendario de adviento",
+    },
   ];
 
   return (
@@ -60,30 +97,54 @@ export function SiteLayout({ children }: { children: ReactNode }) {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3">
           <Link to="/" className="flex items-center gap-2" aria-label="Breath of Life PDC home">
             <LogoMark className="h-12 w-12 sm:h-14 sm:w-14" />
-            <span className="hidden whitespace-nowrap font-display text-lg font-semibold sm:inline">Breath of Life</span>
+            <span className="hidden whitespace-nowrap font-display text-lg font-semibold sm:inline">
+              Breath of Life
+            </span>
           </Link>
           <nav className="hidden items-center gap-0.5 xl:flex">
             {navItems.map((item) => (
-              <a key={item.id} href={item.href} className="whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-secondary hover:text-foreground">
+              <a
+                key={item.id}
+                href={item.href}
+                className="whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-secondary hover:text-foreground"
+              >
                 {t(item.en, item.es)}
               </a>
             ))}
-            <div className="group relative">
-              <button className="whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-secondary hover:text-foreground">
+            <div className="group relative" ref={xmasRef}>
+              <button
+                onClick={() => setXmasOpen((v) => !v)}
+                className="whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-secondary hover:text-foreground"
+              >
                 {t("Christmas 2026", "Navidad 2026")} ▾
               </button>
-              <div className="invisible absolute left-0 top-full z-50 mt-1 min-w-[13rem] rounded-xl border bg-background p-2 opacity-0 shadow-lg transition group-hover:visible group-hover:opacity-100">
-                {xmasLinks.map((l) => (
-                  <a key={l.href} href={l.href} target="_blank" rel="noreferrer" className="block rounded-lg px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-secondary hover:text-foreground">
-                    {t(l.en, l.es)}
-                  </a>
-                ))}
+              <div
+                className={`absolute left-0 top-full z-50 pt-2 transition ${xmasOpen ? "visible opacity-100" : "invisible opacity-0 pointer-events-none group-hover:visible group-hover:opacity-100 group-hover:pointer-events-auto"}`}
+              >
+                <div className="min-w-[13rem] rounded-xl border bg-background p-2 shadow-lg">
+                  {xmasLinks.map((l) => (
+                    <a
+                      key={l.href}
+                      href={l.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => setXmasOpen(false)}
+                      className="block rounded-lg px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-secondary hover:text-foreground"
+                    >
+                      {t(l.en, l.es)}
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
           </nav>
           <div className="flex items-center gap-2">
             <LangToggle />
-            <button className="rounded-full p-2 xl:hidden" onClick={() => setOpen(!open)} aria-label="Menu">
+            <button
+              className="rounded-full p-2 xl:hidden"
+              onClick={() => setOpen(!open)}
+              aria-label="Menu"
+            >
               {open ? <X /> : <Menu />}
             </button>
           </div>
@@ -91,12 +152,28 @@ export function SiteLayout({ children }: { children: ReactNode }) {
         {open && (
           <nav className="flex flex-col gap-1 border-t px-4 py-3 xl:hidden">
             {navItems.map((item) => (
-              <a key={item.id} href={item.href} className="rounded-lg px-3 py-2 font-medium hover:bg-secondary">{t(item.en, item.es)}</a>
+              <a
+                key={item.id}
+                href={item.href}
+                className="rounded-lg px-3 py-2 font-medium hover:bg-secondary"
+              >
+                {t(item.en, item.es)}
+              </a>
             ))}
-            <div className="px-3 py-2 font-semibold text-foreground/80">{t("Christmas 2026", "Navidad 2026")}</div>
+            <div className="px-3 py-2 font-semibold text-foreground/80">
+              {t("Christmas 2026", "Navidad 2026")}
+            </div>
             <div className="ml-3 flex flex-col gap-1">
               {xmasLinks.map((l) => (
-                <a key={l.href} href={l.href} target="_blank" rel="noreferrer" className="rounded-lg px-3 py-2 font-medium hover:bg-secondary">{t(l.en, l.es)}</a>
+                <a
+                  key={l.href}
+                  href={l.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-lg px-3 py-2 font-medium hover:bg-secondary"
+                >
+                  {t(l.en, l.es)}
+                </a>
               ))}
             </div>
           </nav>
@@ -111,12 +188,37 @@ export function SiteLayout({ children }: { children: ReactNode }) {
             <p className="mt-2 opacity-80">{b("contact_address")}</p>
           </div>
           <div className="opacity-80">
-            <p>{t("Special recognition to our many volunteers and supporters.", "Un reconocimiento especial a nuestros voluntarios y simpatizantes.")}</p>
-            <p className="mt-2">{t("Website sponsored by", "Sitio patrocinado por")} <a className="underline" href="https://PlayaVida.org" target="_blank" rel="noreferrer">PlayaVida.org</a></p>
+            <p>
+              {t(
+                "Special recognition to our many volunteers and supporters.",
+                "Un reconocimiento especial a nuestros voluntarios y simpatizantes.",
+              )}
+            </p>
+            <p className="mt-2">
+              {t("Website sponsored by", "Sitio patrocinado por")}{" "}
+              <a
+                className="underline"
+                href="https://PlayaVida.org"
+                target="_blank"
+                rel="noreferrer"
+              >
+                PlayaVida.org
+              </a>
+            </p>
           </div>
           <div className="flex flex-wrap gap-3 md:justify-end">
             {socialLinks(t).map(({ href, Icon, label }) => (
-              <a key={href} href={href} target="_blank" rel="noreferrer" aria-label={label} title={label} className="rounded-full bg-primary-foreground/10 p-3 transition hover:bg-primary-foreground/20"><Icon className="h-5 w-5" /></a>
+              <a
+                key={href}
+                href={href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={label}
+                title={label}
+                className="rounded-full bg-primary-foreground/10 p-3 transition hover:bg-primary-foreground/20"
+              >
+                <Icon className="h-5 w-5" />
+              </a>
             ))}
           </div>
         </div>
@@ -136,9 +238,22 @@ export function PageHero({ kicker, title, sub }: { kicker?: string; title: strin
       <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-accent/30 blur-3xl animate-float" />
       <div className="pointer-events-none absolute -bottom-24 left-10 h-64 w-64 rounded-full bg-sky/30 blur-3xl animate-float" />
       <div className="relative mx-auto max-w-5xl px-4 py-20 text-center md:py-28">
-        {kicker && <p className="animate-fade-up text-sm font-semibold uppercase tracking-widest text-accent">{kicker}</p>}
-        <h1 className="animate-fade-up mt-3 text-4xl font-semibold text-primary md:text-6xl">{title}</h1>
-        {sub && <p className="animate-fade-up mx-auto mt-5 max-w-2xl text-lg text-muted-foreground" style={{ animationDelay: "120ms" }}>{sub}</p>}
+        {kicker && (
+          <p className="animate-fade-up text-sm font-semibold uppercase tracking-widest text-accent">
+            {kicker}
+          </p>
+        )}
+        <h1 className="animate-fade-up mt-3 text-4xl font-semibold text-primary md:text-6xl">
+          {title}
+        </h1>
+        {sub && (
+          <p
+            className="animate-fade-up mx-auto mt-5 max-w-2xl text-lg text-muted-foreground"
+            style={{ animationDelay: "120ms" }}
+          >
+            {sub}
+          </p>
+        )}
       </div>
     </section>
   );
