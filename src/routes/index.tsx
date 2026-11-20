@@ -97,7 +97,7 @@ function Home() {
         <div className="grid gap-6 md:grid-cols-3">
           {[
             { to: "/help" as const, icon: HandHeart, en: "How you can help", es: "Cómo puedes ayudar", den: "Food, clothes, holiday gifts and sponsoring a family.", des: "Alimentos, ropa, regalos navideños y apadrinar una familia." },
-            { to: "/volunteer" as const, icon: Users, en: "Volunteer", es: "Voluntariado", den: "Give your time — join our weekly team.", des: "Dona tu tiempo — únete a nuestro equipo semanal." },
+            { to: "/volunteer" as const, icon: Users, en: "Volunteer", es: "Voluntariado", den: "Give your time — join our team.", des: "Dona tu tiempo — únete a nuestro equipo." },
             { to: "/drop-off" as const, icon: Heart, en: "Drop-off points", es: "Puntos de entrega", den: "Find a business near you accepting donations.", des: "Encuentra un negocio cerca que recibe donativos." },
           ].map((c, i) => (
             <Reveal key={c.to} delay={i * 100}>

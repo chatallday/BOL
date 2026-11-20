@@ -12,7 +12,7 @@ export const Route = createFileRoute("/volunteer")({
       { title: "Volunteer — Breath of Life PDC" },
       { name: "description", content: "Volunteer with Breath of Life in Playa del Carmen: pack despensas, run garden sales, support holiday celebrations." },
       { property: "og:title", content: "Volunteer — Breath of Life PDC" },
-      { property: "og:description", content: "Volunteers always welcome. Sign up to join our weekly team." },
+      { property: "og:description", content: "Volunteers always welcome. Sign up to join our team." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://breathoflifepdc.org/volunteer" },
       { name: "twitter:card", content: "summary_large_image" },
